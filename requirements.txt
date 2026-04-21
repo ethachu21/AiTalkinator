@@ -1,0 +1,9 @@
+elevenlabs
+dotenv
+aiohttp
+google-genai
+PyYAML
+sounddevice
+soundfile
+numpy
+
