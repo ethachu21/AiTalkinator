@@ -52,9 +52,10 @@ class Character:
             try:
                 return self.chat.send_message(message).text
             except:
+                time.sleep(1)
                 continue
-        raise GenerationError
-
+        raise GenerationError('llm error')
+    
     def __call__(self, message: str):
         llm_response = self.generate(message)
         if not isinstance(llm_response, str):
@@ -63,23 +64,34 @@ class Character:
         self.play(audio_bytes)
 
     def tts(self, text: str):   
-        padded_text = f"... {text} ..."
-        return elevenlabs_client.text_to_speech.convert(
-            text=padded_text,
-            voice_id=self.voice_id,
-            model_id="eleven_flash_v2_5",
-            output_format="mp3_44100_128"
-        )
+        for i in range(3):
+            try:
+                padded_text = f"... {text} ..."
+                return elevenlabs_client.text_to_speech.convert(
+                    text=padded_text,
+                    voice_id=self.voice_id,
+                    model_id="eleven_flash_v2_5",
+                    output_format="mp3_44100_128"
+                )
+            except:
+                time.sleep(1)
+                continue
+            raise GenerationError("tts error")
 
     def stt(self, audio: BytesIO):
-        return elevenlabs_client.speech_to_text.convert(
-            file=audio,
-            model_id="scribe_v2",
-            tag_audio_events=True,
-            language_code="eng",
-            diarize=True
-        ).text
-        
+        for i in range(3):
+            try:
+                return elevenlabs_client.speech_to_text.convert(
+                    file=audio,
+                    model_id="scribe_v2",
+                    tag_audio_events=True,
+                    language_code="eng",
+                    diarize=True
+                ).text
+            except:
+                time.sleep(1)
+                continue
+            raise GenerationError("stt error")
 
     def play(self, audio: bytes | Iterator[bytes]):
         elevenlabs_play(audio)
@@ -155,4 +167,5 @@ class Character:
             model='gemini-2.5-flash-lite',
             history=self.history
         )
+
 

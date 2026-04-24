@@ -17,16 +17,25 @@ i mean some people call it a tui! some call it a REPL! i simply couldnt care les
 but its a little program that i made (by hand holding ai since im lazy and wanted to test) which just interacts with the ai and helper files!
 
 ---
-## Default personalities
-idk go check the personas.yaml file!
+## personas.yaml
+you will need to create a file called personas.yaml which follows this structure
+```yaml
+
+BASE_SYSTEM_PROMPT: system prompt for all personas
+
+PersonaName1:
+  system: Persona specific system prompt 
+  voice: ELEVENLABS_VOICE_ID
+PersonaName2:
+  system: Persona specific system prompt 
+  voice: ELEVENLABS_VOICE_ID
+```
 
 ---
 ## .env!
 You will need a file called .env with these 2 environment variables set
 1. GEMINI_API_KEY
 2. ELEVENLABS_API_KEY
-
-Note: its important that the elevenlabs api key is NOT on the free tier otherwise **voices from the voice library WILL NOT WORK**
 
 ---
 ## Why did you post this shit on github?
