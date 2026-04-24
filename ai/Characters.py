@@ -4,6 +4,7 @@ So this file holds all the Ai logic! including:
 - Elevenlabs stt & tts
 '''
 
+import time
 import os
 from typing import Iterator
 from google import genai
@@ -86,7 +87,9 @@ class Character:
                     model_id="scribe_v2",
                     tag_audio_events=True,
                     language_code="eng",
-                    diarize=True
+                    diarize=True,
+                    timestamps_granularity='word'
+                    
                 ).text
             except:
                 time.sleep(1)
